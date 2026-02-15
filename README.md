@@ -13,11 +13,14 @@ Aplikasi **News Feed Simulator** adalah simulasi feed berita yang terus bertamba
 5. Saat berita diclick, aplikasi menampilkan detail beritanya (diambil secara async/simulasi)
 
 ## Cara Menjalankan
-1. Buka project ini menggunakan Android Studio
-2. Tunggu proses Gradle Sync sampai selesai
-3. Jalankan aplikasi dengan menekan tombol **Run**  
+1. Download Project ini (https://github.com/raapstronaut/Praktikum-PAM2.git)
+2. Setelah itu di Ekstrak zipnya
+3. Lalu buka project ini menggunakan Android Studio
+4. Tunggu proses Gradle Sync sampai selesai
+5. Jalankan aplikasi dengan menekan tombol **Run**  
    Pilih emulator atau device Android
-4. Setelah aplikasi terbuka, berita akan muncul otomatis
+6. Setelah itu pop up aplikasi akan terbuka dan berita akan muncul otomatis
 
 ## Screenshoot Aplikasi
 <img width="1920" height="1200" alt="Screenshot (778)" src="https://github.com/user-attachments/assets/8d35bccc-189d-493e-9488-0b2a3594a24b" />
+https://github.com/raapstronaut/Praktikum-PAM2.git
