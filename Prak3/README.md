@@ -1,27 +1,27 @@
-# Kotlin Multiplatform app template
+# Tugas Praktikum 3
 
-[![official project](http://jb.gg/badges/official.svg)](https://confluence.jetbrains.com/display/ALL/JetBrains+on+GitHub)
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+#### Nama : Muhamad Rafi Ilham
+#### NIM  : 123140173
+#### Kelas: PAM RB
 
-This is a basic Kotlin Multiplatform app template for Android and iOS. It includes shared business logic and data handling, and a shared UI implementation using Compose Multiplatform.
+## Deskripsi
+Aplikasi **My Profile App** adalah aplikasi yang menampilkan halaman profil.
 
-> The template is also available [with native UI written in Jetpack Compose and SwiftUI](https://github.com/kotlin/KMP-App-Template-Native).
->
-> The [`amper` branch](https://github.com/Kotlin/KMP-App-Template/tree/amper) showcases the same project configured with [Amper](https://github.com/JetBrains/amper).
+## Fitur Utama
+1. Halaman Profile dengan:
+   - Foto profil **circular** + nama
+   - Bio/deskripsi singkat
+   - List informasi: **Email, Phone, Location**
 
-![Screenshots of the app](images/screenshots.png)
 
-### Technologies
+## Cara Menjalankan (Android Studio)
+1. Clone / download repository:
+   - `https://github.com/raapstronaut/Praktikum-PAM.git`
+2. Buka folder **Prak3** menggunakan Android Studio:
+   - **File → Open → pilih folder `Prak3/`**
+3. Tunggu proses **Gradle Sync** sampai selesai.
+4. Jalankan aplikasi dengan menekan tombol **Run**.
+5. Pilih emulator/device Android, lalu aplikasi akan terbuka dan menampilkan halaman profil.
 
-The data displayed by the app is from [The Metropolitan Museum of Art Collection API](https://metmuseum.github.io/).
-
-The app uses the following multiplatform dependencies in its implementation:
-
-- [Compose Multiplatform](https://jb.gg/compose) for UI
-- [Compose Navigation](https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-navigation-routing.html)
-- [Ktor](https://ktor.io/) for networking
-- [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization) for JSON handling
-- [Coil](https://github.com/coil-kt/coil) for image loading
-- [Koin](https://github.com/InsertKoinIO/koin) for dependency injection
-
-> These are just some of the possible libraries to use for these tasks with Kotlin Multiplatform, and their usage here isn't a strong recommendation for these specific libraries over the available alternatives. You can find a wide variety of curated multiplatform libraries in the [kmp-awesome](https://github.com/terrakok/kmp-awesome) repository.
+## Screenshot Aplikasi
+<img width="1920" height="1200" alt="Screenshot (800)" src="https://github.com/user-attachments/assets/f8beae91-a460-45c1-8d12-9a86d9cc6de3" />
