@@ -35,7 +35,7 @@ fun ProfileScreen() {
                 )
 
                 Text(
-                    text = "Saya adalah mahasiswa ITERA semester 6, yang sedang mengambil matakuliah PAM",
+                    text = "Saya adalah mahasiswa ITERA yang sedang mengambil mata kuliah PAM",
                     style = MaterialTheme.typography.bodyMedium,
                     color = Color(0xFF444444)
                 )
@@ -48,12 +48,6 @@ fun ProfileScreen() {
 
                 Spacer(Modifier.height(8.dp))
 
-                Button(
-                    onClick = {},
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text("Edit Profile")
-                }
             }
         }
     }
