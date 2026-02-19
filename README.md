@@ -3,10 +3,10 @@
 Repository ini isinya kumpulan tugas MK PAM (Pengembangan Aplikasi Mobile)
 
 ## Daftar Tugas
-- **Prak2 — News Feed App (Android)**
+- **Prak2 — News Feed App**
   - Folder: [Prak2](./Prak2)
 
-- **Prak3 — My Profile App (Kotlin Multiplatform / Compose Multiplatform)**
+- **Prak3 — My Profile App**
   - Folder: [Prak3](./Prak3)
 
 ## Cara Membuka Project
