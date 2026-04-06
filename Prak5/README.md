@@ -34,5 +34,20 @@ Pengembangan Aplikasi **Notes App** dengan fitur untuk menambah, melihat, menged
 - **Detail/Edit Note Screen** → melihat dan mengedit catatan
 - **Favorite Screen** → menampilkan catatan favorit
 
-## Screenshot Aplikasi
+## Screenshot Aplikasi & Navigation Flow Diagram
+<img src="https://github.com/user-attachments/assets/418d0be1-c4a6-4545-9073-a5b7495ff7c0" alt="Home" width="200" />
+<img src="https://github.com/user-attachments/assets/4639d9d6-ffd4-45e7-953e-cc003bbc6f40" alt="Add Note" width="200" />
+<img src="https://github.com/user-attachments/assets/ccc19136-6bdf-4700-95b9-62c985511db4" alt="Favorite" width="200" />
+<img src="https://github.com/user-attachments/assets/9647f5a7-c66b-480a-a538-604e5c57b0b1" alt="NotFav" width="200" />
+<img src="https://github.com/user-attachments/assets/4cfb5a00-02ab-442c-a4c9-5e8a60d27ff1" alt="NoteDetail" width="200" />
+<img src="https://github.com/user-attachments/assets/5dd9e359-1753-4f65-a6f5-fc7a2c823240" alt="Profile" width="200" />
+<img width="915" height="265" alt="navflow" src="https://github.com/user-attachments/assets/d70b1e45-ddca-4f14-a69c-b3f8a2163477" />
+
+## Link Video
+https://drive.google.com/file/d/1afCmNpPLJeDK0HdFOQlTGO64R9j6LoEQ/view?usp=drive_link
+
+
+
+
+
 
