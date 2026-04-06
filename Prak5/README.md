@@ -1,35 +1,38 @@
-This is a Kotlin Multiplatform project targeting Android, iOS.
+# Tugas Praktikum 5
 
-* [/composeApp](./composeApp/src) is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - [commonMain](./composeApp/src/commonMain/kotlin) is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    the [iosMain](./composeApp/src/iosMain/kotlin) folder would be the right place for such calls.
-    Similarly, if you want to edit the Desktop (JVM) specific part, the [jvmMain](./composeApp/src/jvmMain/kotlin)
-    folder is the appropriate location.
+#### Nama : Muhamad Rafi Ilham
+#### NIM  : 123140173
+#### Kelas: PAM RB
 
-* [/iosApp](./iosApp/iosApp) contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform,
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+## Deskripsi
+Pengembangan Aplikasi **Notes App** dengan fitur untuk menambah, melihat, mengedit, menghapus, dan menandai catatan favorit
 
-### Build and Run Android Application
+## Fitur Utama
+- Menampilkan daftar catatan pada halaman utama
+- Menambahkan catatan baru
+- Mengedit catatan yang sudah ada
+- Menghapus catatan
+- Menandai catatan sebagai favorit
+- Menampilkan daftar catatan favorit
+- Tampilan awal aplikasi dalam keadaan kosong jika belum ada catatan
+- Navigasi antar halaman pada aplikasi
 
-To build and run the development version of the Android app, use the run configuration from the run widget
-in your IDE’s toolbar or build it directly from the terminal:
-- on macOS/Linux
-  ```shell
-  ./gradlew :composeApp:assembleDebug
-  ```
-- on Windows
-  ```shell
-  .\gradlew.bat :composeApp:assembleDebug
-  ```
 
-### Build and Run iOS Application
+## Cara Menjalankan (Android Studio)
+1. Clone / download repository:
+   - `https://github.com/raapstronaut/Praktikum-PAM.git`
+2. Pilih branch **Praktikum05**
+3. Buka folder **Prak5** menggunakan Android Studio:
+   - **File → Open → pilih folder `Prak5/`**
+4. Tunggu proses **Gradle Sync** sampai selesai.
+5. Jalankan aplikasi dengan menekan tombol **Run**.
+6. Pilih emulator/device, lalu aplikasi akan terbuka.
 
-To build and run the development version of the iOS app, use the run configuration from the run widget
-in your IDE’s toolbar or open the [/iosApp](./iosApp) directory in Xcode and run it from there.
+## Struktur Fitur
+- **Home Screen** → menampilkan daftar catatan
+- **Add Note Screen** → menambahkan catatan baru
+- **Detail/Edit Note Screen** → melihat dan mengedit catatan
+- **Favorite Screen** → menampilkan catatan favorit
 
----
+## Screenshot Aplikasi
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
