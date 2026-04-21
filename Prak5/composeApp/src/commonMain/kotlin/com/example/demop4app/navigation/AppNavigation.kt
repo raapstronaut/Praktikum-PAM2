@@ -10,8 +10,9 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -21,25 +22,28 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.demop4app.screens.AddNoteScreen
 import com.example.demop4app.screens.EditNoteScreen
-import com.example.demop4app.screens.FavoritesScreen
 import com.example.demop4app.screens.NoteDetailScreen
 import com.example.demop4app.screens.NotesScreen
-import com.example.demop4app.screens.ProfileScreen
+import com.example.demop4app.screens.SettingsScreen
+import com.example.demop4app.settings.SettingsViewModel
 import com.example.demop4app.viewmodel.NotesViewModel
 
+
 @Composable
-fun AppNavigation() {
+fun AppNavigation(
+    notesViewModel: NotesViewModel,
+    settingsViewModel: SettingsViewModel
+) {
     val navController = rememberNavController()
-    val notesViewModel = remember { NotesViewModel() }
 
     val bottomItems = listOf(
         BottomNavItem.Notes,
-        BottomNavItem.Favorites,
-        BottomNavItem.Profile
+        BottomNavItem.Settings
     )
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
+    val selectedNote by notesViewModel.selectedNote.collectAsState()
 
     Scaffold(
         bottomBar = {
@@ -49,8 +53,11 @@ fun AppNavigation() {
                         selected = currentRoute == item.route,
                         onClick = {
                             navController.navigate(item.route) {
-                                popUpTo(navController.graph.startDestinationId)
+                                popUpTo(Screen.Notes.route) {
+                                    saveState = true
+                                }
                                 launchSingleTop = true
+                                restoreState = true
                             }
                         },
                         icon = {
@@ -88,32 +95,10 @@ fun AppNavigation() {
         ) {
             composable(Screen.Notes.route) {
                 NotesScreen(
-                    notes = notesViewModel.notes,
+                    viewModel = notesViewModel,
                     onNoteClick = { noteId ->
                         navController.navigate(Screen.NoteDetail.createRoute(noteId))
-                    },
-                    onToggleFavorite = { noteId ->
-                        notesViewModel.toggleFavorite(noteId)
                     }
-                )
-            }
-
-            composable(Screen.Favorites.route) {
-                FavoritesScreen(
-                    notes = notesViewModel.getFavoriteNotes(),
-                    onNoteClick = { noteId ->
-                        navController.navigate(Screen.NoteDetail.createRoute(noteId))
-                    },
-                    onToggleFavorite = { noteId ->
-                        notesViewModel.toggleFavorite(noteId)
-                    }
-                )
-            }
-
-            composable(Screen.Profile.route) {
-                ProfileScreen(
-                    totalNotes = notesViewModel.notes.size,
-                    totalFavorites = notesViewModel.getFavoriteNotes().size
                 )
             }
 
@@ -129,17 +114,25 @@ fun AppNavigation() {
                 )
             }
 
+            composable(Screen.Settings.route) {
+                SettingsScreen(viewModel = settingsViewModel)
+            }
+
             composable(
                 route = Screen.NoteDetail.route,
                 arguments = listOf(
                     navArgument("noteId") {
-                        type = NavType.IntType
+                        type = NavType.LongType
                     }
                 )
             ) { backStackEntry ->
-                val noteId = backStackEntry.arguments?.getInt("noteId") ?: 0
-                val note = notesViewModel.getNoteById(noteId)
+                val noteId = backStackEntry.arguments?.getLong("noteId") ?: 0L
 
+                LaunchedEffect(noteId) {
+                    notesViewModel.selectNote(noteId)
+                }
+
+                val note = selectedNote
                 if (note != null) {
                     NoteDetailScreen(
                         note = note,
@@ -152,11 +145,10 @@ fun AppNavigation() {
                         onDeleteClick = {
                             notesViewModel.deleteNote(noteId)
                             navController.popBackStack()
-                        },
-                        onToggleFavorite = {
-                            notesViewModel.toggleFavorite(noteId)
                         }
                     )
+                } else {
+                    Text("Loading note...")
                 }
             }
 
@@ -164,13 +156,17 @@ fun AppNavigation() {
                 route = Screen.EditNote.route,
                 arguments = listOf(
                     navArgument("noteId") {
-                        type = NavType.IntType
+                        type = NavType.LongType
                     }
                 )
             ) { backStackEntry ->
-                val noteId = backStackEntry.arguments?.getInt("noteId") ?: 0
-                val note = notesViewModel.getNoteById(noteId)
+                val noteId = backStackEntry.arguments?.getLong("noteId") ?: 0L
 
+                LaunchedEffect(noteId) {
+                    notesViewModel.selectNote(noteId)
+                }
+
+                val note = selectedNote
                 if (note != null) {
                     EditNoteScreen(
                         note = note,
@@ -182,6 +178,8 @@ fun AppNavigation() {
                             navController.popBackStack()
                         }
                     )
+                } else {
+                    Text("Loading note...")
                 }
             }
         }
