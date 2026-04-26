@@ -1,7 +1,9 @@
 package com.example.demop4app.navigation
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 
@@ -14,6 +16,18 @@ sealed class BottomNavItem(
         route = Screen.Notes.route,
         icon = Icons.Default.Home,
         label = "Notes"
+    )
+
+    object Favorites : BottomNavItem(
+        route = Screen.Favorites.route,
+        icon = Icons.Default.Favorite,
+        label = "Favorites"
+    )
+
+    object Profile : BottomNavItem(
+        route = Screen.Profile.route,
+        icon = Icons.Default.Person,
+        label = "Profile"
     )
 
     object Settings : BottomNavItem(

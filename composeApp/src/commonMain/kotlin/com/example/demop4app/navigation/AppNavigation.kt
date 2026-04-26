@@ -22,22 +22,32 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.demop4app.screens.AddNoteScreen
 import com.example.demop4app.screens.EditNoteScreen
+import com.example.demop4app.screens.FavoritesScreen
 import com.example.demop4app.screens.NoteDetailScreen
 import com.example.demop4app.screens.NotesScreen
+import com.example.demop4app.screens.ProfileScreen
 import com.example.demop4app.screens.SettingsScreen
 import com.example.demop4app.settings.SettingsViewModel
 import com.example.demop4app.viewmodel.NotesViewModel
-
+import org.koin.compose.koinInject
 
 @Composable
-fun AppNavigation(
-    notesViewModel: NotesViewModel,
-    settingsViewModel: SettingsViewModel
-) {
+fun AppNavigation() {
     val navController = rememberNavController()
+
+    val notesViewModel: NotesViewModel = koinInject()
+    val settingsViewModel: SettingsViewModel = koinInject()
+
+    val sortOrder by settingsViewModel.sortOrder.collectAsState()
+
+    LaunchedEffect(sortOrder) {
+        notesViewModel.updateSortOrder(sortOrder)
+    }
 
     val bottomItems = listOf(
         BottomNavItem.Notes,
+        BottomNavItem.Favorites,
+        BottomNavItem.Profile,
         BottomNavItem.Settings
     )
 
@@ -102,6 +112,25 @@ fun AppNavigation(
                 )
             }
 
+            composable(Screen.Favorites.route) {
+                FavoritesScreen(
+                    viewModel = notesViewModel,
+                    onNoteClick = { noteId ->
+                        navController.navigate(Screen.NoteDetail.createRoute(noteId))
+                    }
+                )
+            }
+
+            composable(Screen.Profile.route) {
+                ProfileScreen(
+                    viewModel = notesViewModel
+                )
+            }
+
+            composable(Screen.Settings.route) {
+                SettingsScreen(viewModel = settingsViewModel)
+            }
+
             composable(Screen.AddNote.route) {
                 AddNoteScreen(
                     onSave = { title, content ->
@@ -112,10 +141,6 @@ fun AppNavigation(
                         navController.popBackStack()
                     }
                 )
-            }
-
-            composable(Screen.Settings.route) {
-                SettingsScreen(viewModel = settingsViewModel)
             }
 
             composable(
@@ -145,6 +170,12 @@ fun AppNavigation(
                         onDeleteClick = {
                             notesViewModel.deleteNote(noteId)
                             navController.popBackStack()
+                        },
+                        onToggleFavorite = {
+                            notesViewModel.toggleFavorite(
+                                id = note.id,
+                                isFavorite = note.is_favorite != 1L
+                            )
                         }
                     )
                 } else {
