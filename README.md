@@ -1,35 +1,96 @@
-This is a Kotlin Multiplatform project targeting Android, iOS.
+# Tugas Praktikum 9
 
-* [/composeApp](./composeApp/src) is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - [commonMain](./composeApp/src/commonMain/kotlin) is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    the [iosMain](./composeApp/src/iosMain/kotlin) folder would be the right place for such calls.
-    Similarly, if you want to edit the Desktop (JVM) specific part, the [jvmMain](./composeApp/src/jvmMain/kotlin)
-    folder is the appropriate location.
+#### Nama : Muhamad Rafi Ilham
+#### NIM  : 123140173
+#### Kelas: PAM RB
 
-* [/iosApp](./iosApp/iosApp) contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform,
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+## Deskripsi
+Pengembangan aplikasi **PocketWise**, yaitu aplikasi pencatat pengeluaran pribadi berbasis **Kotlin Multiplatform** yang terintegrasi dengan **Gemini API**.
 
-### Build and Run Android Application
+Aplikasi ini digunakan untuk mencatat pengeluaran berdasarkan nominal, kategori, dan catatan. Data pengeluaran kemudian dihitung secara lokal oleh aplikasi untuk mendapatkan total pengeluaran, jumlah transaksi, dan kategori pengeluaran terbesar.
 
-To build and run the development version of the Android app, use the run configuration from the run widget
-in your IDE’s toolbar or build it directly from the terminal:
-- on macOS/Linux
-  ```shell
-  ./gradlew :composeApp:assembleDebug
-  ```
-- on Windows
-  ```shell
-  .\gradlew.bat :composeApp:assembleDebug
-  ```
+Fitur AI digunakan untuk memberikan analisis pengeluaran dan saran penghematan berdasarkan data yang dimasukkan pengguna.
 
-### Build and Run iOS Application
+## Fitur Utama
+- Menambahkan data pengeluaran berdasarkan nominal, kategori, dan catatan
+- Menampilkan daftar pengeluaran
+- Menghitung total pengeluaran secara lokal
+- Menampilkan jumlah transaksi dan kategori pengeluaran terbesar
+- Mengintegrasikan **Gemini API** untuk analisis pengeluaran
+- Menggunakan prompt yang dirancang untuk asisten keuangan mahasiswa
+- Menampilkan loading state saat AI memproses data
+- Menangani error seperti API key tidak valid, timeout, model tidak ditemukan, dan quota/rate limit
+- Menyediakan fallback mode jika Gemini API tidak tersedia
 
-To build and run the development version of the iOS app, use the run configuration from the run widget
-in your IDE’s toolbar or open the [/iosApp](./iosApp) directory in Xcode and run it from there.
+##  AI Integration
+PocketWise menggunakan **Gemini API** untuk menganalisis data pengeluaran pengguna.
 
----
+Alur AI pada aplikasi:
+1. Pengguna memasukkan data pengeluaran
+2. Aplikasi menghitung ringkasan pengeluaran secara lokal
+3. Ringkasan dan detail transaksi dikirim ke Gemini API
+4. Gemini memberikan analisis dan saran penghematan
+5. Hasil analisis ditampilkan pada aplikasi
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+Perhitungan angka seperti total pengeluaran dan kategori terbesar dilakukan oleh aplikasi, bukan oleh AI, agar hasil lebih akurat.
+
+## Prompt Engineering
+Prompt dirancang dengan beberapa bagian utama:
+- **Role**: Gemini berperan sebagai asisten keuangan pribadi untuk mahasiswa
+- **Task**: Menganalisis data pengeluaran dan memberi saran hemat
+- **Rules**:
+  - Gunakan Bahasa Indonesia
+  - Jangan mengarang angka di luar data yang diberikan
+  - Jangan memberikan rekomendasi produk keuangan tertentu
+  - Fokus pada pengelolaan pengeluaran harian
+- **Format Output**:
+  1. Ringkasan Kondisi Keuangan
+  2. Pengeluaran Terbesar
+  3. Pola yang Terlihat
+  4. Risiko Jika Dibiarkan
+  5. Saran Penghematan
+  6. Target Minggu Depan
+ 
+## Error Handling dan Fallback Mode
+Aplikasi menangani beberapa kondisi error, seperti:
+- API key kosong atau tidak valid
+- Prompt kosong
+- Request Gemini tidak valid
+- Model Gemini tidak ditemukan
+- Gemini API terkena quota atau rate limit
+- Request timeout
+- Gemini tidak mengembalikan respons
+- Belum ada data pengeluaran untuk dianalisis
+- Nominal pengeluaran tidak valid
+
+Jika Gemini API tidak tersedia karena quota atau rate limit, aplikasi akan menampilkan **fallback analysis** berdasarkan data lokal seperti total pengeluaran, jumlah transaksi, kategori terbesar, dan saran sederhana sesuai kategori dominan.
+
+Fallback mode tidak menggantikan Gemini API, tetapi digunakan agar aplikasi tetap responsif ketika layanan AI eksternal sedang tidak tersedia.
+
+## Cara Menjalankan (Android Studio)
+1. Pilih branch **week9**
+2. Clone / download repository:
+   - `https://github.com/raapstronaut/Praktikum-PAM.git`
+3. Buka folder project tugas praktikum 8 menggunakan Android Studio.
+4. Tunggu proses **Gradle Sync** sampai selesai.
+5. Jalankan aplikasi dengan menekan tombol **Run**.
+6. Pilih emulator/device Android, lalu aplikasi akan terbuka.
+
+## Screenshot Aplikasi
+
+<table>
+  <tr>
+    <td align="center"><b>1. Input Expense</b></td>
+    <td align="center"><b>2. Expense Summary</b></td>
+    <td align="center"><b>3. Loading State</b></td>
+    <td align="center"><b>4. AI Analysis / Fallback</b></td>
+    <td align="center"><b>5. Error Handling</b></td>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/44709b46-efdb-462d-a7ae-2d82b1b23a9f" width="220" /></td>
+    <td><img src="https://github.com/user-attachments/assets/f9a9fba0-5cd7-4d7a-83e9-3fc1d1efd5f3" width="220"/></td>
+    <td><img src="https://github.com/user-attachments/assets/fa3cf673-18e0-4674-bb5b-10101b45b26c" width="220"/></td>
+    <td><img src="https://github.com/user-attachments/assets/cbbd83cc-df4d-4ee3-b546-e6c92257f3d6" width="220"/></td>
+    <td><img src="https://github.com/user-attachments/assets/18608a3d-6d91-4fcf-b6b0-3a08132772bf" width="220"/></td>
+  </tr>
+</table>
