@@ -39,9 +39,7 @@ class GeminiService(
     }
 
     private val baseUrl = "https://generativelanguage.googleapis.com/v1beta"
-
-    // Sesuai materi praktikum: Gemini 2.0 Flash
-    private val model = "gemini-2.0-flash"
+    private val model = "gemini-2.5-flash"
 
     suspend fun generateContent(prompt: String): Result<String> {
         return try {
