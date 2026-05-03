@@ -91,4 +91,3 @@ Jika Gemini API tidak tersedia karena quota atau rate limit, aplikasi tetap memb
     <td><img src="https://github.com/user-attachments/assets/18608a3d-6d91-4fcf-b6b0-3a08132772bf" width="220"/></td>
   </tr>
 </table>
-<img width="596" height="1060" alt="Screenshot (984)" src= />
