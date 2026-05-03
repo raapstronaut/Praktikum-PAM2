@@ -20,7 +20,6 @@ Fitur AI digunakan untuk memberikan analisis pengeluaran dan saran penghematan b
 - Menggunakan prompt yang dirancang untuk asisten keuangan mahasiswa
 - Menampilkan loading state saat AI memproses data
 - Menangani error seperti API key tidak valid, timeout, model tidak ditemukan, dan quota/rate limit
-- Menyediakan fallback mode jika Gemini API tidak tersedia
 
 ##  AI Integration
 PocketWise menggunakan **Gemini API** untuk menganalisis data pengeluaran pengguna.
@@ -63,15 +62,13 @@ Aplikasi menangani beberapa kondisi error, seperti:
 - Belum ada data pengeluaran untuk dianalisis
 - Nominal pengeluaran tidak valid
 
-Jika Gemini API tidak tersedia karena quota atau rate limit, aplikasi akan menampilkan **fallback analysis** berdasarkan data lokal seperti total pengeluaran, jumlah transaksi, kategori terbesar, dan saran sederhana sesuai kategori dominan.
-
-Fallback mode tidak menggantikan Gemini API, tetapi digunakan agar aplikasi tetap responsif ketika layanan AI eksternal sedang tidak tersedia.
+Jika Gemini API tidak tersedia karena quota atau rate limit, aplikasi tetap memberikan feedback melalui fallback analysis lokal berdasarkan data pengeluaran yang sudah dihitung aplikasi.
 
 ## Cara Menjalankan (Android Studio)
 1. Pilih branch **week9**
 2. Clone / download repository:
    - `https://github.com/raapstronaut/Praktikum-PAM.git`
-3. Buka folder project tugas praktikum 8 menggunakan Android Studio.
+3. Buka folder project tugas praktikum 9 menggunakan Android Studio.
 4. Tunggu proses **Gradle Sync** sampai selesai.
 5. Jalankan aplikasi dengan menekan tombol **Run**.
 6. Pilih emulator/device Android, lalu aplikasi akan terbuka.
@@ -83,14 +80,15 @@ Fallback mode tidak menggantikan Gemini API, tetapi digunakan agar aplikasi teta
     <td align="center"><b>1. Input Expense</b></td>
     <td align="center"><b>2. Expense Summary</b></td>
     <td align="center"><b>3. Loading State</b></td>
-    <td align="center"><b>4. AI Analysis / Fallback</b></td>
+    <td align="center"><b>4. AI Analysis</b></td>
     <td align="center"><b>5. Error Handling</b></td>
   </tr>
   <tr>
     <td><img src="https://github.com/user-attachments/assets/44709b46-efdb-462d-a7ae-2d82b1b23a9f" width="220" /></td>
     <td><img src="https://github.com/user-attachments/assets/f9a9fba0-5cd7-4d7a-83e9-3fc1d1efd5f3" width="220"/></td>
     <td><img src="https://github.com/user-attachments/assets/fa3cf673-18e0-4674-bb5b-10101b45b26c" width="220"/></td>
-    <td><img src="https://github.com/user-attachments/assets/cbbd83cc-df4d-4ee3-b546-e6c92257f3d6" width="220"/></td>
+    <td><img src="https://github.com/user-attachments/assets/e89d5f68-f2d2-43ac-b399-779b5eccb6a6" width="220"/></td>
     <td><img src="https://github.com/user-attachments/assets/18608a3d-6d91-4fcf-b6b0-3a08132772bf" width="220"/></td>
   </tr>
 </table>
+<img width="596" height="1060" alt="Screenshot (984)" src= />
