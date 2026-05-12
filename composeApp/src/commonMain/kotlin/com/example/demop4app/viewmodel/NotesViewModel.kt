@@ -2,9 +2,11 @@ package com.example.demop4app.viewmodel
 
 import com.example.demop4app.db.Note
 import com.example.demop4app.repository.NotesRepository
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,9 +16,10 @@ import kotlinx.coroutines.launch
 
 @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
 class NotesViewModel(
-    private val repository: NotesRepository
+    private val repository: NotesRepository,
+    mainDispatcher: CoroutineDispatcher = Dispatchers.Main
 ) {
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+    private val scope = CoroutineScope(SupervisorJob() + mainDispatcher)
 
     private val _searchQuery = MutableStateFlow("")
     val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
@@ -116,6 +119,7 @@ class NotesViewModel(
         scope.launch {
             repository.toggleFavorite(id, isFavorite)
             refreshCounts()
+
             val currentSelected = _selectedNote.value
             if (currentSelected != null && currentSelected.id == id) {
                 _selectedNote.value = repository.getNoteById(id)
@@ -134,5 +138,9 @@ class NotesViewModel(
             _totalNotesCount.value = repository.getTotalNotesCount()
             _totalFavoritesCount.value = repository.getTotalFavoritesCount()
         }
+    }
+
+    fun clear() {
+        scope.cancel()
     }
 }

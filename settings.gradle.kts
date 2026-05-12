@@ -1,4 +1,4 @@
-rootProject.name = "DemoP4App"
+rootProject.name = "Week10NotesApp"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {

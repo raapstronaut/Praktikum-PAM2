@@ -5,40 +5,57 @@ import app.cash.sqldelight.coroutines.mapToList
 import com.example.demop4app.db.Note
 import com.example.demop4app.db.NotesDatabase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
 
-class NotesRepository(
+interface NotesRepository {
+    fun getAllNotes(sortOrder: String): Flow<List<Note>>
+    fun searchNotes(query: String, sortOrder: String): Flow<List<Note>>
+    fun getFavoriteNotes(sortOrder: String): Flow<List<Note>>
+
+    suspend fun getNoteById(id: Long): Note?
+    suspend fun insertNote(title: String, content: String)
+    suspend fun updateNote(id: Long, title: String, content: String)
+    suspend fun deleteNote(id: Long)
+    suspend fun toggleFavorite(id: Long, isFavorite: Boolean)
+    suspend fun getTotalNotesCount(): Long
+    suspend fun getTotalFavoritesCount(): Long
+}
+
+class SqlDelightNotesRepository(
     private val database: NotesDatabase
-) {
+) : NotesRepository {
+
     private val queries = database.noteQueries
 
-    fun getAllNotes(sortOrder: String) =
+    override fun getAllNotes(sortOrder: String): Flow<List<Note>> =
         when (sortOrder) {
             "oldest" -> queries.selectAllOldest()
             else -> queries.selectAllNewest()
         }.asFlow().mapToList(Dispatchers.Default)
 
-    fun searchNotes(query: String, sortOrder: String) =
+    override fun searchNotes(query: String, sortOrder: String): Flow<List<Note>> =
         when (sortOrder) {
             "oldest" -> queries.searchOldest("%$query%", "%$query%")
             else -> queries.searchNewest("%$query%", "%$query%")
         }.asFlow().mapToList(Dispatchers.Default)
 
-    fun getFavoriteNotes(sortOrder: String) =
+    override fun getFavoriteNotes(sortOrder: String): Flow<List<Note>> =
         when (sortOrder) {
             "oldest" -> queries.selectFavoritesOldest()
             else -> queries.selectFavoritesNewest()
         }.asFlow().mapToList(Dispatchers.Default)
 
-    suspend fun getNoteById(id: Long): Note? {
+    override suspend fun getNoteById(id: Long): Note? {
         return withContext(Dispatchers.Default) {
             queries.selectById(id).executeAsOneOrNull()
         }
     }
 
-    suspend fun insertNote(title: String, content: String) {
+    override suspend fun insertNote(title: String, content: String) {
         val now = Clock.System.now().toEpochMilliseconds()
+
         withContext(Dispatchers.Default) {
             queries.insertNote(
                 title = title,
@@ -49,8 +66,9 @@ class NotesRepository(
         }
     }
 
-    suspend fun updateNote(id: Long, title: String, content: String) {
+    override suspend fun updateNote(id: Long, title: String, content: String) {
         val now = Clock.System.now().toEpochMilliseconds()
+
         withContext(Dispatchers.Default) {
             queries.updateNote(
                 title = title,
@@ -61,13 +79,13 @@ class NotesRepository(
         }
     }
 
-    suspend fun deleteNote(id: Long) {
+    override suspend fun deleteNote(id: Long) {
         withContext(Dispatchers.Default) {
             queries.deleteNote(id)
         }
     }
 
-    suspend fun toggleFavorite(id: Long, isFavorite: Boolean) {
+    override suspend fun toggleFavorite(id: Long, isFavorite: Boolean) {
         withContext(Dispatchers.Default) {
             queries.toggleFavorite(
                 is_favorite = if (isFavorite) 1 else 0,
@@ -76,13 +94,13 @@ class NotesRepository(
         }
     }
 
-    suspend fun getTotalNotesCount(): Long {
+    override suspend fun getTotalNotesCount(): Long {
         return withContext(Dispatchers.Default) {
             queries.countAllNotes().executeAsOne()
         }
     }
 
-    suspend fun getTotalFavoritesCount(): Long {
+    override suspend fun getTotalFavoritesCount(): Long {
         return withContext(Dispatchers.Default) {
             queries.countFavorites().executeAsOne()
         }

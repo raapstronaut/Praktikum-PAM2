@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     id("app.cash.sqldelight") version "2.0.1"
+    id("org.jetbrains.kotlinx.kover")
 }
 
 kotlin {
@@ -61,6 +62,29 @@ kotlin {
 
         commonTest.dependencies {
             implementation(libs.kotlin.test)
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1")
+            implementation("app.cash.turbine:turbine:1.0.0")
+            implementation("io.insert-koin:koin-test:3.5.3")
+        }
+
+        val androidUnitTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
+                implementation("junit:junit:4.13.2")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1")
+                implementation("app.cash.turbine:turbine:1.0.0")
+                implementation("io.mockk:mockk:1.13.12")
+                implementation("app.cash.sqldelight:sqlite-driver:2.0.1")
+                implementation("io.insert-koin:koin-test:3.5.3")
+            }
+        }
+
+        val androidInstrumentedTest by getting {
+            dependencies {
+                implementation("androidx.test.ext:junit:1.2.1")
+                implementation("androidx.test:runner:1.6.2")
+                implementation("androidx.compose.ui:ui-test-junit4:1.7.0")
+            }
         }
     }
 }
@@ -83,6 +107,8 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     packaging {
@@ -97,6 +123,10 @@ android {
         }
     }
 
+    testOptions {
+        unitTests.isReturnDefaultValues = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -105,6 +135,7 @@ android {
 
 dependencies {
     debugImplementation(libs.compose.uiTooling)
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.7.0")
 }
 
 tasks.withType<KotlinJvmCompile>().configureEach {
@@ -112,3 +143,4 @@ tasks.withType<KotlinJvmCompile>().configureEach {
         jvmTarget.set(JvmTarget.JVM_11)
     }
 }
+
